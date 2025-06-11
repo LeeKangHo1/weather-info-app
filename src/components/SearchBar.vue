@@ -1,17 +1,22 @@
 <template>
     <div class="search-bar">
-        <form>
+        <form @submit.prevent>
             <div class="form-group">
-                <input type="search" placeholder="지역을 입력해 주세요">
-                <button>
+                <input @input="inputText = $event.target.value" type="search" placeholder="지역을 입력해 주세요">
+                <button @click="emits('onSearchCity', inputText)">
                     <font-awesome-icon :icon="['fas', 'magnifying-glass']" />
                 </button>
             </div>
         </form>
-    </div>
+      </div>
+      <p>{{ inputText }}</p>
 </template>
 
 <script setup>
+  import { ref } from 'vue';
+
+  const inputText = ref('');
+  const emits = defineEmits(['onSearchCity']);
 
 </script>
 
