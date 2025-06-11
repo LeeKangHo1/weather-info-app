@@ -11,7 +11,8 @@ export default createStore({
             text: 'text',
             location: 'location',
             city: 'Seoul',
-        }
+        },
+        toggle: false, // true일 때 about 보여주기
     },
     mutations: {
         // mutations(데이터 변경 함수들)
@@ -29,11 +30,15 @@ export default createStore({
         onSearchCity(state, payload) {
             state.weatherData.city = payload;
         },
+        toggleButton (state) {
+            state.toggle = !state.toggle
+        }
     },
     actions: {
         // actions(데이터 변경)
-        getWeather(context) { // 함수 정의를 위해 function 적지 않아도 된다       
-        const API_URL = `https://api.openweathermap.org/data/2.5/weather?q=${context.state.weatherData.city}&appid=c61686d7206df0b75e922d749f6d2138`
+        getWeather(context) { // 함수 정의를 위해 function 적지 않아도 된다 
+        const API_KEY = import.meta.env.VITE_API_KEY;     
+        const API_URL = `https://api.openweathermap.org/data/2.5/weather?q=${context.state.weatherData.city}&appid=${API_KEY}`
         fetch(API_URL)
             .then(res => res.json())
             .then(data => {
